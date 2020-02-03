@@ -3,12 +3,13 @@ import timon from './images/timon.jpg'
 import pumba from './images/pumba.jpg'
 import SelectBox from '../select-box/SelectBox'
 import styled from 'styled-components'
+import { CTX } from '../../Store'
 
 
 
 export default function Dashboard() {
 
-    const [msgTextValue, changeMsgTextValue] = React.useState('')
+   
 
     const ChatWrapper = styled.section`
         display: grid;
@@ -106,18 +107,25 @@ export default function Dashboard() {
         cursor: pointer;
     `;
 
+     // CTx store
+     const [allChats] = React.useContext(CTX)
+     console.log(allChats)
+ 
+     const topics = Object.keys(allChats)
+ 
+     const [activeTopic, changeActiveTopic] = React.useState(topics[0])
+     const [msgTextValue, changeMsgTextValue] = React.useState('')
+
     return(
         // Grid Parent
         <ChatWrapper >
 
             <Navigation>
                         <SelectBox
-                            items={[
-                                {value: 'Topic 1', id: 1},
-                                {value: 'Topic 2', id: 2},
-                                {value: 'Topic 3', id: 3}
-                            ]}
+                            topics= {topics}
+                            onChange={changeActiveTopic}
                         />
+                        <h1>!{activeTopic}!</h1>
             </Navigation>
     
             <ChatWindow>

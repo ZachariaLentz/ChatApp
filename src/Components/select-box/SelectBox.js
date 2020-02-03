@@ -4,9 +4,9 @@ import ArrowDown from './images/arrow_down.svg'
 import ArrowUp from './images/arrow_up.svg'
 
 const SelectBox = (props) => {
-    const [items] = useState(props.items || []);
+    const [items] = useState(props.topics || []);
     const [showItems, setShowItems] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(props.items && props.items[0]);
+    const [selectedItem, setSelectedItem] = useState(props.topics && props.topics[0]);
     
 
     const dropDown = () => {
@@ -16,6 +16,10 @@ const SelectBox = (props) => {
     const selectItem = (item) => {
         setSelectedItem(item);
         setShowItems(false);
+        console.log(1)
+        // props.onChange(item);
+        console.log(2)
+        console.log(selectedItem)
     }
 
     const Wrapper = styled.section`
@@ -71,18 +75,18 @@ const SelectBox = (props) => {
                     <DropdownButton onClick={dropDown} />
 
                     <Selected>
-                        {selectedItem.value}
+                        {selectedItem}
                     </Selected>                 
 
                     <Select>
                         {
                             items.map(item => 
                                 <Option
-                                    key={ item.id }
+                                    key={ item }
                                     onClick={() => selectItem(item)}
                                     style={item === selectedItem ? {color: '#1111ff'} : {color: 'inherit'}}
                                 >
-                                    { item.value }
+                                    { item }
                                 </Option>
                             )
                         }
