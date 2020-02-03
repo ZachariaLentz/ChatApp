@@ -8,7 +8,7 @@ import styled from 'styled-components'
 
 export default function Dashboard() {
 
-    //const [textValue, changeTextValue] = React.useState('')
+    const [msgTextValue, changeMsgTextValue] = React.useState('')
 
     const ChatWrapper = styled.section`
         display: grid;
@@ -146,7 +146,7 @@ export default function Dashboard() {
     
             {/* text input with button to send messages */}
             <MessageWindow>
-                <MessageText type="text" placeholder="Send a chat" />
+                <MessageText type="text" placeholder="Send a chat" value={msgTextValue} onChange={e => changeMsgTextValue(e.target.value)} />
                 <MessageButton type="button">Send</MessageButton>
             </MessageWindow>
     
