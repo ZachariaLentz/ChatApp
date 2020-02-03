@@ -1,6 +1,6 @@
 import React from 'react'
-import timon from './images/timon.jpg'
-import pumba from './images/pumba.jpg'
+// import timon from './images/timon.jpg'
+// import pumba from './images/pumba.jpg'
 import SelectBox from '../select-box/SelectBox'
 import styled from 'styled-components'
 import { CTX } from '../../Store'
@@ -109,7 +109,6 @@ export default function Dashboard() {
 
      // CTx store
      const [allChats] = React.useContext(CTX)
-     console.log(allChats)
  
      const topics = Object.keys(allChats)
  
@@ -122,15 +121,25 @@ export default function Dashboard() {
 
             <Navigation>
                         <SelectBox
-                            topics= {topics}
+                            items= {topics}
+                            activeItem={activeTopic}
                             onChange={changeActiveTopic}
                         />
-                        <h1>!{activeTopic}!</h1>
             </Navigation>
     
             <ChatWindow>
+                {
+                allChats[activeTopic].map((chat, i) => (
+                    <ChatContainer key={i}>
+                        <UserAvatar src={chat.avatar} alt="User Avatar"/>
 
-                <ChatContainer>
+                        <Header>{chat.from} <ChatTime>{chat.time}</ChatTime></Header>
+
+                        <ChatMessage>{chat.msg}</ChatMessage>
+                    </ChatContainer>
+                ))
+                }
+                {/* <ChatContainer>
                     <UserAvatar src={pumba} alt="User Avatar"/>
 
                     <Header>Pumba1234 <ChatTime>12:24pm</ChatTime></Header>
@@ -148,7 +157,7 @@ export default function Dashboard() {
                     <ChatMessage>
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus perferendis recusandae incidunt quos quisquamratione laboriosam officia reprehenderit pariatur facere, atque, illum quidem? Voluptas, cupiditate nemo.Perferendis unde odit dolorem?
                     </ChatMessage>
-                </ChatContainer>
+                </ChatContainer> */}
 
             </ChatWindow>
     

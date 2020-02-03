@@ -3,23 +3,13 @@ import styled from 'styled-components'
 import ArrowDown from './images/arrow_down.svg'
 import ArrowUp from './images/arrow_up.svg'
 
-const SelectBox = (props) => {
-    const [items] = useState(props.topics || []);
+const SelectBox = (props) => { 
+    const [items] = useState(props.items || []);
     const [showItems, setShowItems] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(props.topics && props.topics[0]);
     
 
     const dropDown = () => {
         setShowItems(!showItems)
-    }
-
-    const selectItem = (item) => {
-        setSelectedItem(item);
-        setShowItems(false);
-        console.log(1)
-        // props.onChange(item);
-        console.log(2)
-        console.log(selectedItem)
     }
 
     const Wrapper = styled.section`
@@ -75,7 +65,7 @@ const SelectBox = (props) => {
                     <DropdownButton onClick={dropDown} />
 
                     <Selected>
-                        {selectedItem}
+                        {props.activeItem}
                     </Selected>                 
 
                     <Select>
@@ -83,8 +73,8 @@ const SelectBox = (props) => {
                             items.map(item => 
                                 <Option
                                     key={ item }
-                                    onClick={() => selectItem(item)}
-                                    style={item === selectedItem ? {color: '#1111ff'} : {color: 'inherit'}}
+                                    onClick={() => props.onChange(item)}
+                                    style={item === props.activeItem ? {color: '#1111ff'} : {color: 'inherit'}}
                                 >
                                     { item }
                                 </Option>

@@ -33,14 +33,14 @@ const initState = {
         {
             avatar: 'https://picsum.photos/41', 
             from: 'Brian', 
-            time: '12:22pm', 
+            time: '12:23pm', 
             msg: 'Lucas ipsum dolor sit amet hutt kenobi kit lando vader skywalker lando darth bespin chewbacca. Calrissian palpatine vader kessel fett antilles moff coruscant darth. Skywalker dantooine wampa moff dooku antilles watto. Yavin skywalker jango boba fett skywalker aayla. Lando boba ponda dagobah mace kessel kessel qui-gon.' 
         },
         
         {
             avatar: 'https://picsum.photos/42', 
             from: 'Bri', 
-            time: '12:22pm', 
+            time: '12:24pm', 
             msg: 'Hey! you there, with the hands. Freak human out make funny noise mow mow mow mow mow mow success now attack human this is the day roll on the floor purring your whiskers off for stinky cat munch, munch, chomp, chomp, but spill litter box, scratch at owner, destroy all furniture, especially couch.' 
         }
     ],
