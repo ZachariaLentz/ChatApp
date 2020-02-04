@@ -9,7 +9,7 @@ const SelectBox = (props) => {
     
 
     const dropDown = () => {
-        setShowItems(!showItems)
+        setShowItems(!showItems);
     }
 
     const Wrapper = styled.section`
@@ -73,7 +73,10 @@ const SelectBox = (props) => {
                             items.map(item => 
                                 <Option
                                     key={ item }
-                                    onClick={() => props.onChange(item)}
+                                    onClick={() => {
+                                        props.onChange(item);
+                                        setShowItems(false);
+                                    }}
                                     style={item === props.activeItem ? {color: '#1111ff'} : {color: 'inherit'}}
                                 >
                                     { item }

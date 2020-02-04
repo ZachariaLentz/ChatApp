@@ -6,12 +6,93 @@ import styled from 'styled-components'
 import { CTX } from '../../Store'
 
 
-
 export default function Dashboard() {
 
-   
+    // CTX store
+    const {allChats, sendChatAction} = React.useContext(CTX);
+    
+    const topics = Object.keys(allChats);
 
-    const ChatWrapper = styled.section`
+    const [activeTopic, changeActiveTopic] = React.useState(topics[0]);
+    const [msgTextValue, changeMsgTextValue] = React.useState('');
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes();
+
+    return(
+        // Grid Parent
+        <ChatWrapper >
+
+            <Navigation>
+                <SelectBox
+                    items= {topics}
+                    activeItem={activeTopic}
+                    onChange={changeActiveTopic}
+                />
+            </Navigation>
+    
+            <ChatWindow>
+                {
+                allChats[activeTopic].map((chat, i) => (
+                    <ChatContainer key={i}>
+                        <UserAvatar src={chat.avatar} alt="User Avatar"/>
+
+                        <Header>{chat.from} <ChatTime>{chat.time}</ChatTime></Header>
+
+                        <ChatMessage>{chat.msg}</ChatMessage>
+                    </ChatContainer>
+                ))
+                }
+
+            </ChatWindow>
+    
+            {/* text input with button to send messages */}
+            <MessageWindow>
+                <MessageText
+                    type="text" 
+                    placeholder="Send a chat" 
+                    value={msgTextValue} 
+                    onChange={e => changeMsgTextValue(e.target.value)} 
+                    onKeyPress={e => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          sendChatAction(
+                            {
+                                avatar:'https://picsum.photos/40', 
+                                from: 'me', 
+                                time: time, 
+                                msg: msgTextValue,
+                                topic: activeTopic
+                            }
+                        );
+                        changeMsgTextValue('');
+                        }
+                      }}
+                />
+                <MessageButton
+                    type="button"
+                    onClick={() => {
+                        sendChatAction(
+                            {
+                                avatar:'https://picsum.photos/40', 
+                                from: 'me', 
+                                time: time, 
+                                msg: msgTextValue,
+                                topic: activeTopic
+                            }
+                        );
+                        changeMsgTextValue('');
+                    }
+                    }
+                        >
+                    Send
+                </MessageButton>
+            </MessageWindow>
+    
+        </ChatWrapper>
+    )
+}
+
+const ChatWrapper = styled.section`
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 3rem 1fr 4rem;
@@ -24,6 +105,7 @@ export default function Dashboard() {
         background-color: #ff9900;
         border-radius: 0 0 0.2rem 0.2rem;
         position: fixed;
+        top: 0;
         width: 100%;
         height: 3rem;
     `;
@@ -68,7 +150,7 @@ export default function Dashboard() {
         grid-area: c;
     `;
 
-    const MessageWindow = styled.section`
+    const MessageWindow = styled.form`
         grid-row-start: 3;
         grid-row-end: 4;
         background-color: #ff9900;
@@ -106,67 +188,3 @@ export default function Dashboard() {
         align-self: end;
         cursor: pointer;
     `;
-
-     // CTx store
-     const [allChats] = React.useContext(CTX)
- 
-     const topics = Object.keys(allChats)
- 
-     const [activeTopic, changeActiveTopic] = React.useState(topics[0])
-     const [msgTextValue, changeMsgTextValue] = React.useState('')
-
-    return(
-        // Grid Parent
-        <ChatWrapper >
-
-            <Navigation>
-                        <SelectBox
-                            items= {topics}
-                            activeItem={activeTopic}
-                            onChange={changeActiveTopic}
-                        />
-            </Navigation>
-    
-            <ChatWindow>
-                {
-                allChats[activeTopic].map((chat, i) => (
-                    <ChatContainer key={i}>
-                        <UserAvatar src={chat.avatar} alt="User Avatar"/>
-
-                        <Header>{chat.from} <ChatTime>{chat.time}</ChatTime></Header>
-
-                        <ChatMessage>{chat.msg}</ChatMessage>
-                    </ChatContainer>
-                ))
-                }
-                {/* <ChatContainer>
-                    <UserAvatar src={pumba} alt="User Avatar"/>
-
-                    <Header>Pumba1234 <ChatTime>12:24pm</ChatTime></Header>
-
-                    <ChatMessage>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus perferendis recusandae incidunt quos quisquam ratione laboriosam officia reprehenderit pariatur facere, atque, illum quidem? Voluptas, cupiditate nemo. Perferendis unde odit dolorem?
-                    </ChatMessage>
-                </ChatContainer>
-
-                <ChatContainer>
-                    <UserAvatar src={timon} alt="User Avatar"/>
-
-                    <Header>Timon8996 <ChatTime>12:30pm</ChatTime></Header>
-
-                    <ChatMessage>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus perferendis recusandae incidunt quos quisquamratione laboriosam officia reprehenderit pariatur facere, atque, illum quidem? Voluptas, cupiditate nemo.Perferendis unde odit dolorem?
-                    </ChatMessage>
-                </ChatContainer> */}
-
-            </ChatWindow>
-    
-            {/* text input with button to send messages */}
-            <MessageWindow>
-                <MessageText type="text" placeholder="Send a chat" value={msgTextValue} onChange={e => changeMsgTextValue(e.target.value)} />
-                <MessageButton type="button">Send</MessageButton>
-            </MessageWindow>
-    
-        </ChatWrapper>
-    )
-}
